@@ -25,6 +25,9 @@ public class Client extends javax.swing.JFrame {
        static DataInputStream  dis;
        static DataOutputStream dos;
      
+       // encryption
+       final String secretKey = "secrete";
+      AESEncryptionDecryption aesEncryptionDecryption = new AESEncryptionDecryption();
       
        
     /**
@@ -107,10 +110,12 @@ public class Client extends javax.swing.JFrame {
         
             try {
                 msg= msg_text.getText();
+                String encryptedmsg = aesEncryptionDecryption.encrypt(msg, secretKey);
+                System.out.println(encryptedmsg);
                 
                 
                 
-                dos.writeUTF(msg);
+                dos.writeUTF(encryptedmsg);
                 //msg_area.setText("Client : "+msg);
                 msg_text.setText("");
             } catch (Exception e) {
