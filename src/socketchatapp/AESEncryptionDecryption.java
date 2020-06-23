@@ -36,7 +36,30 @@ public class AESEncryptionDecryption {
             e.printStackTrace();
         }
     }
-    
+    // encrypt
+        public String encrypt(String strToEncrypt, String secret) {
+        try {
+            prepareSecreteKey(secret);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+        } catch (Exception e) {
+            System.out.println("Error encrypting: " + e.toString());
+        }
+        return null;
+    }
+   //decrypt
+    public String decrypt(String strToDecrypt, String secret) {
+        try {
+            prepareSecreteKey(secret);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+        } catch (Exception e) {
+            System.out.println("Error decrypting: " + e.toString());
+        }
+        return null;
+    }
    
 
    
