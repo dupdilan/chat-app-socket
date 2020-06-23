@@ -3,7 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/dupdilan/Documents/NetBeansProjects/socketChatApp/src/socketchatapp/SocketChatApp.java</file>
+            <file>file:/D:/Git_Project/chat-app-socket/src/socketchatapp/Server.java</file>
+            <file>file:/D:/Git_Project/chat-app-socket/src/socketchatapp/AESEncryptionDecryption.java</file>
+            <file>file:/D:/Git_Project/chat-app-socket/src/socketchatapp/Client.java</file>
         </group>
     </open-files>
 </project-private>
