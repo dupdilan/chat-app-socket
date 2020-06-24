@@ -111,6 +111,7 @@ public class Server extends javax.swing.JFrame {
             try {
                 msg= msg_text.getText();
                 dataOutput.writeUTF(msg);
+                msg_area.setText(msg_area.getText()+"\n Server : "+msg);
                 msg_text.setText("");
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
