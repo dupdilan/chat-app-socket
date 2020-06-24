@@ -12,6 +12,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static socketchatapp.Client.dis;
+import static socketchatapp.Client.secretKey;
 
 /**
  *
@@ -22,6 +24,11 @@ public class Server extends javax.swing.JFrame {
        static Socket  socket;
        static DataInputStream  dataInput;
        static DataOutputStream dataOutput;
+       
+       
+       // encryption
+       final static String secretKey = "secrete";
+      AESEncryptionDecryption aesEncryptionDecryption = new AESEncryptionDecryption();
        
     /**
      * Creates new form Server
@@ -109,10 +116,20 @@ public class Server extends javax.swing.JFrame {
         String msg = " ";
         
             try {
-                msg= msg_text.getText();
-                dataOutput.writeUTF(msg);
+                 msg= msg_text.getText();
+                
+                // server msg print
                 msg_area.setText(msg_area.getText()+"\n Server : "+msg);
+                
+                String encryptedmsg = aesEncryptionDecryption.encrypt(msg, secretKey);
+                System.out.println(encryptedmsg);
+                
+                dataOutput.writeUTF(encryptedmsg);
+                
+           
+//                msg_area.setText(msg_area.getText()+"\n Server : "+msg);
                 msg_text.setText("");
+                
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -169,7 +186,10 @@ public class Server extends javax.swing.JFrame {
                dataOutput = new DataOutputStream(socket.getOutputStream());
                
                while(!msg.equals("exit")){
-               msg = dataInput.readUTF();
+               
+                    AESEncryptionDecryption aesEncryptionDecryption = new AESEncryptionDecryption();
+                msg = aesEncryptionDecryption.decrypt(dataInput.readUTF(), secretKey);
+               
                msg_area.setText(msg_area.getText()+"\n Client : " +msg);//display with previous msg
                
                }
