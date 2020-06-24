@@ -25,6 +25,9 @@ public class Client extends javax.swing.JFrame {
        static DataInputStream  dis;
        static DataOutputStream dos;
      
+       // encryption
+       final static String secretKey = "secrete";
+      AESEncryptionDecryption aesEncryptionDecryption = new AESEncryptionDecryption();
       
        
     /**
@@ -50,6 +53,7 @@ public class Client extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 51, 102));
 
         msg_area.setColumns(20);
         msg_area.setRows(5);
@@ -107,14 +111,17 @@ public class Client extends javax.swing.JFrame {
         
             try {
                 msg= msg_text.getText();
+                // client msg print
+                msg_area.setText(msg_area.getText()+"\n Client : "+msg);
                 
+                String encryptedmsg = aesEncryptionDecryption.encrypt(msg, secretKey);
+                System.out.println(encryptedmsg);
                 
-                
-                dos.writeUTF(msg);
+                dos.writeUTF(encryptedmsg);
                 //msg_area.setText("Client : "+msg);
                 msg_text.setText("");
             } catch (Exception e) {
-                //
+                System.out.println("Error" +e);
             }
     }//GEN-LAST:event_btn_submitActionPerformed
 
@@ -140,12 +147,16 @@ public class Client extends javax.swing.JFrame {
                dos = new DataOutputStream(soc.getOutputStream());
                
                while(!msg.equals("exit")){
-               msg = dis.readUTF();
+                   //decrypting server message
+                   
+               AESEncryptionDecryption aesEncryptionDecryption = new AESEncryptionDecryption();
+               msg = aesEncryptionDecryption.decrypt(dis.readUTF(), secretKey);
+              // msg = dis.readUTF();
                msg_area.setText(msg_area.getText()+"\n Server : " +msg);//display with previous msg
                }
                
            } catch (Exception e) {
-               
+               System.out.println("Error" +e);
                
                
            }
